@@ -449,25 +449,28 @@ var app = (function () {
      * referential equality to itself, i.e. {} !== {} whereas "x" === "x"), even when you have multiple different contexts
      * operating across many component layers.
      */
-    const AUTH0_CONTEXT_KEY = {};
+    const AUTH0_CONTEXT_CLIENT_PROMISE = {};
+    const AUTH0_CONTEXT_REDIRECT_URI = {};
 
     async function refreshToken() {
-        const auth0 = await getContext(AUTH0_CONTEXT_KEY);
+        const auth0 = await getContext(AUTH0_CONTEXT_CLIENT_PROMISE);
         const token = await auth0.getTokenSilently();
         authToken.set(token);
     }
 
     async function login(preserveRoute = true) {
-        const auth0 = await getContext(AUTH0_CONTEXT_KEY);
+        const auth0 = await getContext(AUTH0_CONTEXT_CLIENT_PROMISE);
+        const redirect_uri = getContext(AUTH0_CONTEXT_REDIRECT_URI);
+
         // try to keep the user on the same page from which they triggered login. If set to false should typically
         // cause redirect to /.
         const appState = (preserveRoute) ? { pathname: window.location.pathname, search: window.location.search } : {};
-        await auth0.loginWithRedirect({ redirect_uri: window.location.origin + window.location.pathname, appState });
+        await auth0.loginWithRedirect({ redirect_uri, appState });
     }
 
     async function logout() {
-        // getContext(AUTH0_CONTEXT_KEY) returns a promise.
-        const auth0 = await getContext(AUTH0_CONTEXT_KEY);
+        // getContext(AUTH0_CONTEXT_CLIENT_PROMISE) returns a promise.
+        const auth0 = await getContext(AUTH0_CONTEXT_CLIENT_PROMISE);
         authToken.set('');
         auth0.logout({ returnTo: window.location.origin});
     }
@@ -495,8 +498,8 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let current;
-    	const default_slot_template = /*$$slots*/ ctx[8].default;
-    	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], null);
+    	const default_slot_template = /*$$slots*/ ctx[9].default;
+    	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[8], null);
 
     	const block = {
     		c: function create() {
@@ -513,8 +516,8 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (default_slot && default_slot.p && dirty & /*$$scope*/ 128) {
-    				default_slot.p(get_slot_context(default_slot_template, ctx, /*$$scope*/ ctx[7], null), get_slot_changes(default_slot_template, /*$$scope*/ ctx[7], dirty, null));
+    			if (default_slot && default_slot.p && dirty & /*$$scope*/ 256) {
+    				default_slot.p(get_slot_context(default_slot_template, ctx, /*$$scope*/ ctx[8], null), get_slot_changes(default_slot_template, /*$$scope*/ ctx[8], dirty, null));
     			}
     		},
     		i: function intro(local) {
@@ -545,10 +548,12 @@ var app = (function () {
     function instance($$self, $$props, $$invalidate) {
     	let { domain } = $$props;
     	let { client_id } = $$props;
+    	let { redirect_uri } = $$props;
+    	setContext(AUTH0_CONTEXT_REDIRECT_URI, redirect_uri || "https://darrelopry.com/svelte-auth0" || window.origin);
     	const refreshRate = 10 * 60 * 60 * 1000;
     	let tokenRefreshIntervalId;
     	let auth0Promise = createAuth0Client({ domain, client_id });
-    	setContext(AUTH0_CONTEXT_KEY, auth0Promise);
+    	setContext(AUTH0_CONTEXT_CLIENT_PROMISE, auth0Promise);
 
     	async function handleOnMount() {
     		const auth0 = await auth0Promise;
@@ -588,7 +593,7 @@ var app = (function () {
 
     	onMount(handleOnMount);
     	onDestroy(handleOnDestroy);
-    	const writable_props = ["domain", "client_id"];
+    	const writable_props = ["domain", "client_id", "redirect_uri"];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Auth0Context> was created with unknown prop '${key}'`);
@@ -599,13 +604,15 @@ var app = (function () {
     	$$self.$set = $$props => {
     		if ("domain" in $$props) $$invalidate(0, domain = $$props.domain);
     		if ("client_id" in $$props) $$invalidate(1, client_id = $$props.client_id);
-    		if ("$$scope" in $$props) $$invalidate(7, $$scope = $$props.$$scope);
+    		if ("redirect_uri" in $$props) $$invalidate(2, redirect_uri = $$props.redirect_uri);
+    		if ("$$scope" in $$props) $$invalidate(8, $$scope = $$props.$$scope);
     	};
 
     	$$self.$capture_state = () => {
     		return {
     			domain,
     			client_id,
+    			redirect_uri,
     			tokenRefreshIntervalId,
     			auth0Promise
     		};
@@ -614,6 +621,7 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ("domain" in $$props) $$invalidate(0, domain = $$props.domain);
     		if ("client_id" in $$props) $$invalidate(1, client_id = $$props.client_id);
+    		if ("redirect_uri" in $$props) $$invalidate(2, redirect_uri = $$props.redirect_uri);
     		if ("tokenRefreshIntervalId" in $$props) tokenRefreshIntervalId = $$props.tokenRefreshIntervalId;
     		if ("auth0Promise" in $$props) auth0Promise = $$props.auth0Promise;
     	};
@@ -621,6 +629,7 @@ var app = (function () {
     	return [
     		domain,
     		client_id,
+    		redirect_uri,
     		tokenRefreshIntervalId,
     		refreshRate,
     		auth0Promise,
@@ -634,7 +643,7 @@ var app = (function () {
     class Auth0Context extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance, create_fragment, safe_not_equal, { domain: 0, client_id: 1 });
+    		init(this, options, instance, create_fragment, safe_not_equal, { domain: 0, client_id: 1, redirect_uri: 2 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -653,6 +662,10 @@ var app = (function () {
     		if (/*client_id*/ ctx[1] === undefined && !("client_id" in props)) {
     			console.warn("<Auth0Context> was created without expected prop 'client_id'");
     		}
+
+    		if (/*redirect_uri*/ ctx[2] === undefined && !("redirect_uri" in props)) {
+    			console.warn("<Auth0Context> was created without expected prop 'redirect_uri'");
+    		}
     	}
 
     	get domain() {
@@ -670,13 +683,21 @@ var app = (function () {
     	set client_id(value) {
     		throw new Error_1("<Auth0Context>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
+
+    	get redirect_uri() {
+    		throw new Error_1("<Auth0Context>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set redirect_uri(value) {
+    		throw new Error_1("<Auth0Context>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
     }
 
     /* src\App.svelte generated by Svelte v3.16.7 */
 
     const file = "src\\App.svelte";
 
-    // (16:0) <Auth0Context domain="dev-hvw40i79.auth0.com" client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP">
+    // (16:0) <Auth0Context   domain="dev-hvw40i79.auth0.com"   client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP" >
     function create_default_slot(ctx) {
     	let button0;
     	let t1;
@@ -733,14 +754,14 @@ var app = (function () {
     			pre4 = element("pre");
     			t16 = text("authError: ");
     			t17 = text(/*$authError*/ ctx[4]);
-    			add_location(button0, file, 16, 2, 289);
-    			add_location(button1, file, 17, 2, 348);
-    			add_location(br, file, 17, 60, 406);
-    			add_location(pre0, file, 18, 2, 415);
-    			add_location(pre1, file, 19, 2, 452);
-    			add_location(pre2, file, 20, 2, 501);
-    			add_location(pre3, file, 21, 2, 538);
-    			add_location(pre4, file, 22, 2, 598);
+    			add_location(button0, file, 19, 2, 294);
+    			add_location(button1, file, 20, 2, 353);
+    			add_location(br, file, 20, 60, 411);
+    			add_location(pre0, file, 21, 2, 420);
+    			add_location(pre1, file, 22, 2, 457);
+    			add_location(pre2, file, 23, 2, 506);
+    			add_location(pre3, file, 24, 2, 543);
+    			add_location(pre4, file, 25, 2, 603);
 
     			dispose = [
     				listen_dev(button0, "click", prevent_default(login), false, true, false),
@@ -803,7 +824,7 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(16:0) <Auth0Context domain=\\\"dev-hvw40i79.auth0.com\\\" client_id=\\\"aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP\\\">",
+    		source: "(16:0) <Auth0Context   domain=\\\"dev-hvw40i79.auth0.com\\\"   client_id=\\\"aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP\\\" >",
     		ctx
     	});
 
@@ -847,14 +868,14 @@ var app = (function () {
     			li1 = element("li");
     			a1 = element("a");
     			a1.textContent = "Use your own keys for the Social connection";
-    			add_location(p, file, 25, 0, 650);
+    			add_location(p, file, 28, 0, 655);
     			attr_dev(a0, "href", "https://auth0.com/docs/universal-login/new");
-    			add_location(a0, file, 30, 6, 861);
-    			add_location(li0, file, 30, 2, 857);
+    			add_location(a0, file, 33, 6, 866);
+    			add_location(li0, file, 33, 2, 862);
     			attr_dev(a1, "href", "https://auth0.com/docs/connections/social/google");
-    			add_location(a1, file, 31, 6, 977);
-    			add_location(li1, file, 31, 2, 973);
-    			add_location(ol, file, 29, 0, 850);
+    			add_location(a1, file, 34, 6, 982);
+    			add_location(li1, file, 34, 2, 978);
+    			add_location(ol, file, 32, 0, 855);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
