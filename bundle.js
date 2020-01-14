@@ -462,7 +462,7 @@ var app = (function () {
         // try to keep the user on the same page from which they triggered login. If set to false should typically
         // cause redirect to /.
         const appState = (preserveRoute) ? { pathname: window.location.pathname, search: window.location.search } : {};
-        await auth0.loginWithRedirect({ redirect_uri: window.location.origin + '/' + window.location.pathname, appState });
+        await auth0.loginWithRedirect({ redirect_uri: window.location.origin + window.location.pathname, appState });
     }
 
     async function logout() {
