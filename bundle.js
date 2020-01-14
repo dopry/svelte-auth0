@@ -474,7 +474,7 @@ var app = (function () {
      */
     async function login(preserveRoute = true, callback_url = null) {
         const auth0 = await getContext(AUTH0_CONTEXT_CLIENT_PROMISE);
-        const redirect_uri =  callback_url || getContext(AUTH0_CONTEXT_CALLBACK_URL);
+        const redirect_uri =  callback_url || getContext(AUTH0_CONTEXT_CALLBACK_URL) || window.location.href;
 
         // try to keep the user on the same page from which they triggered login. If set to false should typically
         // cause redirect to /.
@@ -490,7 +490,7 @@ var app = (function () {
     async function logout(logout_url = null) {
         // getContext(AUTH0_CONTEXT_CLIENT_PROMISE) returns a promise.
         const auth0 = await getContext(AUTH0_CONTEXT_CLIENT_PROMISE);
-        const returnTo = logout_url || getContext(AUTH0_CONTEXT_LOGOUT_URL);
+        const returnTo = logout_url || getContext(AUTH0_CONTEXT_LOGOUT_URL) || window.location.href;
         authToken.set('');
         auth0.logout({ returnTo });
     }
@@ -570,8 +570,8 @@ var app = (function () {
     	let { client_id } = $$props;
     	let { callback_url } = $$props;
     	let { logout_url } = $$props;
-    	setContext(AUTH0_CONTEXT_CALLBACK_URL, callback_url || window.origin);
-    	setContext(AUTH0_CONTEXT_LOGOUT_URL, logout_url || window.origin);
+    	setContext(AUTH0_CONTEXT_CALLBACK_URL, callback_url);
+    	setContext(AUTH0_CONTEXT_LOGOUT_URL, logout_url);
     	const refreshRate = 10 * 60 * 60 * 1000;
     	let tokenRefreshIntervalId;
     	let auth0Promise = createAuth0Client({ domain, client_id });
@@ -741,33 +741,46 @@ var app = (function () {
 
     const file = "src\\App.svelte";
 
-    // (16:0) <Auth0Context   domain="dev-hvw40i79.auth0.com"   client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP"   callback_url="https://darrelopry.com/svelte-auth0"   logout_url="https://darrelopry.com/svelte-auth0" >
+    // (15:0) <Auth0Context   domain="dev-hvw40i79.auth0.com"   client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP"   callback_url="https://darrelopry.com/svelte-auth0"   logout_url="https://darrelopry.com/svelte-auth0" >
     function create_default_slot(ctx) {
     	let button0;
     	let t1;
     	let button1;
-    	let br;
     	let t3;
-    	let pre0;
-    	let t4;
-    	let t5;
+    	let table;
+    	let thead;
+    	let tr0;
+    	let th0;
+    	let th1;
     	let t6;
-    	let pre1;
-    	let t7;
+    	let tbody;
+    	let tr1;
+    	let td0;
+    	let td1;
     	let t8;
     	let t9;
-    	let pre2;
-    	let t10;
+    	let tr2;
+    	let td2;
+    	let td3;
     	let t11;
     	let t12;
-    	let pre3;
-    	let t13;
-    	let t14_value = JSON.stringify(/*$userInfo*/ ctx[3], null, 2) + "";
+    	let tr3;
+    	let td4;
+    	let td5;
     	let t14;
     	let t15;
-    	let pre4;
-    	let t16;
+    	let tr4;
+    	let td6;
+    	let td7;
+    	let pre1;
+    	let t17_value = JSON.stringify(/*$userInfo*/ ctx[3], null, 2) + "";
     	let t17;
+    	let pre0;
+    	let t18;
+    	let tr5;
+    	let td8;
+    	let td9;
+    	let t20;
     	let dispose;
 
     	const block = {
@@ -777,35 +790,74 @@ var app = (function () {
     			t1 = space();
     			button1 = element("button");
     			button1.textContent = "Logout";
-    			br = element("br");
     			t3 = space();
-    			pre0 = element("pre");
-    			t4 = text("isLoading: ");
-    			t5 = text(/*$isLoading*/ ctx[0]);
+    			table = element("table");
+    			thead = element("thead");
+    			tr0 = element("tr");
+    			th0 = element("th");
+    			th0.textContent = "store";
+    			th1 = element("th");
+    			th1.textContent = "value";
     			t6 = space();
-    			pre1 = element("pre");
-    			t7 = text("isAuthenticated: ");
-    			t8 = text(/*$isAuthenticated*/ ctx[1]);
+    			tbody = element("tbody");
+    			tr1 = element("tr");
+    			td0 = element("td");
+    			td0.textContent = "isLoading";
+    			td1 = element("td");
+    			t8 = text(/*$isLoading*/ ctx[0]);
     			t9 = space();
-    			pre2 = element("pre");
-    			t10 = text("authToken: ");
-    			t11 = text(/*$authToken*/ ctx[2]);
+    			tr2 = element("tr");
+    			td2 = element("td");
+    			td2.textContent = "isAuthenticated";
+    			td3 = element("td");
+    			t11 = text(/*$isAuthenticated*/ ctx[1]);
     			t12 = space();
-    			pre3 = element("pre");
-    			t13 = text("userInfo: ");
-    			t14 = text(t14_value);
+    			tr3 = element("tr");
+    			td4 = element("td");
+    			td4.textContent = "authToken";
+    			td5 = element("td");
+    			t14 = text(/*$authToken*/ ctx[2]);
     			t15 = space();
-    			pre4 = element("pre");
-    			t16 = text("authError: ");
-    			t17 = text(/*$authError*/ ctx[4]);
-    			add_location(button0, file, 21, 2, 398);
-    			add_location(button1, file, 22, 2, 466);
-    			add_location(br, file, 22, 69, 533);
-    			add_location(pre0, file, 23, 2, 542);
-    			add_location(pre1, file, 24, 2, 579);
-    			add_location(pre2, file, 25, 2, 628);
-    			add_location(pre3, file, 26, 2, 665);
-    			add_location(pre4, file, 27, 2, 725);
+    			tr4 = element("tr");
+    			td6 = element("td");
+    			td6.textContent = "userInfo";
+    			td7 = element("td");
+    			pre1 = element("pre");
+    			t17 = text(t17_value);
+    			pre0 = element("pre");
+    			t18 = space();
+    			tr5 = element("tr");
+    			td8 = element("td");
+    			td8.textContent = "authError";
+    			td9 = element("td");
+    			t20 = text(/*$authError*/ ctx[4]);
+    			attr_dev(button0, "class", "btn");
+    			add_location(button0, file, 21, 2, 406);
+    			attr_dev(button1, "class", "btn");
+    			add_location(button1, file, 22, 2, 486);
+    			add_location(th0, file, 25, 10, 598);
+    			add_location(th1, file, 25, 24, 612);
+    			add_location(tr0, file, 25, 6, 594);
+    			add_location(thead, file, 24, 4, 580);
+    			add_location(td0, file, 28, 10, 667);
+    			add_location(td1, file, 28, 28, 685);
+    			add_location(tr1, file, 28, 6, 663);
+    			add_location(td2, file, 29, 10, 722);
+    			add_location(td3, file, 29, 34, 746);
+    			add_location(tr2, file, 29, 6, 718);
+    			add_location(td4, file, 30, 10, 789);
+    			add_location(td5, file, 30, 28, 807);
+    			add_location(tr3, file, 30, 6, 785);
+    			add_location(td6, file, 31, 10, 844);
+    			add_location(pre0, file, 31, 72, 906);
+    			add_location(pre1, file, 31, 31, 865);
+    			add_location(td7, file, 31, 27, 861);
+    			add_location(tr4, file, 31, 6, 840);
+    			add_location(td8, file, 32, 10, 932);
+    			add_location(td9, file, 32, 28, 950);
+    			add_location(tr5, file, 32, 6, 928);
+    			add_location(tbody, file, 27, 4, 649);
+    			add_location(table, file, 23, 2, 568);
 
     			dispose = [
     				listen_dev(button0, "click", prevent_default(/*click_handler*/ ctx[5]), false, true, false),
@@ -816,50 +868,54 @@ var app = (function () {
     			insert_dev(target, button0, anchor);
     			insert_dev(target, t1, anchor);
     			insert_dev(target, button1, anchor);
-    			insert_dev(target, br, anchor);
     			insert_dev(target, t3, anchor);
-    			insert_dev(target, pre0, anchor);
-    			append_dev(pre0, t4);
-    			append_dev(pre0, t5);
-    			insert_dev(target, t6, anchor);
-    			insert_dev(target, pre1, anchor);
-    			append_dev(pre1, t7);
-    			append_dev(pre1, t8);
-    			insert_dev(target, t9, anchor);
-    			insert_dev(target, pre2, anchor);
-    			append_dev(pre2, t10);
-    			append_dev(pre2, t11);
-    			insert_dev(target, t12, anchor);
-    			insert_dev(target, pre3, anchor);
-    			append_dev(pre3, t13);
-    			append_dev(pre3, t14);
-    			insert_dev(target, t15, anchor);
-    			insert_dev(target, pre4, anchor);
-    			append_dev(pre4, t16);
-    			append_dev(pre4, t17);
+    			insert_dev(target, table, anchor);
+    			append_dev(table, thead);
+    			append_dev(thead, tr0);
+    			append_dev(tr0, th0);
+    			append_dev(tr0, th1);
+    			append_dev(table, t6);
+    			append_dev(table, tbody);
+    			append_dev(tbody, tr1);
+    			append_dev(tr1, td0);
+    			append_dev(tr1, td1);
+    			append_dev(td1, t8);
+    			append_dev(tbody, t9);
+    			append_dev(tbody, tr2);
+    			append_dev(tr2, td2);
+    			append_dev(tr2, td3);
+    			append_dev(td3, t11);
+    			append_dev(tbody, t12);
+    			append_dev(tbody, tr3);
+    			append_dev(tr3, td4);
+    			append_dev(tr3, td5);
+    			append_dev(td5, t14);
+    			append_dev(tbody, t15);
+    			append_dev(tbody, tr4);
+    			append_dev(tr4, td6);
+    			append_dev(tr4, td7);
+    			append_dev(td7, pre1);
+    			append_dev(pre1, t17);
+    			append_dev(pre1, pre0);
+    			append_dev(tbody, t18);
+    			append_dev(tbody, tr5);
+    			append_dev(tr5, td8);
+    			append_dev(tr5, td9);
+    			append_dev(td9, t20);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*$isLoading*/ 1) set_data_dev(t5, /*$isLoading*/ ctx[0]);
-    			if (dirty & /*$isAuthenticated*/ 2) set_data_dev(t8, /*$isAuthenticated*/ ctx[1]);
-    			if (dirty & /*$authToken*/ 4) set_data_dev(t11, /*$authToken*/ ctx[2]);
-    			if (dirty & /*$userInfo*/ 8 && t14_value !== (t14_value = JSON.stringify(/*$userInfo*/ ctx[3], null, 2) + "")) set_data_dev(t14, t14_value);
-    			if (dirty & /*$authError*/ 16) set_data_dev(t17, /*$authError*/ ctx[4]);
+    			if (dirty & /*$isLoading*/ 1) set_data_dev(t8, /*$isLoading*/ ctx[0]);
+    			if (dirty & /*$isAuthenticated*/ 2) set_data_dev(t11, /*$isAuthenticated*/ ctx[1]);
+    			if (dirty & /*$authToken*/ 4) set_data_dev(t14, /*$authToken*/ ctx[2]);
+    			if (dirty & /*$userInfo*/ 8 && t17_value !== (t17_value = JSON.stringify(/*$userInfo*/ ctx[3], null, 2) + "")) set_data_dev(t17, t17_value);
+    			if (dirty & /*$authError*/ 16) set_data_dev(t20, /*$authError*/ ctx[4]);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(button0);
     			if (detaching) detach_dev(t1);
     			if (detaching) detach_dev(button1);
-    			if (detaching) detach_dev(br);
     			if (detaching) detach_dev(t3);
-    			if (detaching) detach_dev(pre0);
-    			if (detaching) detach_dev(t6);
-    			if (detaching) detach_dev(pre1);
-    			if (detaching) detach_dev(t9);
-    			if (detaching) detach_dev(pre2);
-    			if (detaching) detach_dev(t12);
-    			if (detaching) detach_dev(pre3);
-    			if (detaching) detach_dev(t15);
-    			if (detaching) detach_dev(pre4);
+    			if (detaching) detach_dev(table);
     			run_all(dispose);
     		}
     	};
@@ -868,7 +924,7 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(16:0) <Auth0Context   domain=\\\"dev-hvw40i79.auth0.com\\\"   client_id=\\\"aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP\\\"   callback_url=\\\"https://darrelopry.com/svelte-auth0\\\"   logout_url=\\\"https://darrelopry.com/svelte-auth0\\\" >",
+    		source: "(15:0) <Auth0Context   domain=\\\"dev-hvw40i79.auth0.com\\\"   client_id=\\\"aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP\\\"   callback_url=\\\"https://darrelopry.com/svelte-auth0\\\"   logout_url=\\\"https://darrelopry.com/svelte-auth0\\\" >",
     		ctx
     	});
 
@@ -876,6 +932,7 @@ var app = (function () {
     }
 
     function create_fragment$1(ctx) {
+    	let div;
     	let t0;
     	let p;
     	let t2;
@@ -901,10 +958,11 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
+    			div = element("div");
     			create_component(auth0context.$$.fragment);
     			t0 = space();
     			p = element("p");
-    			p.textContent = "If social login is not persisting across page reloads, you are most likely using Universal Login classic with Auth0 Dev\nkeys for the social provider. There are two ways to resolve the issue:";
+    			p.textContent = "If social login is not persisting across page reloads, you are most likely using Universal Login classic with Auth0\nDev keys for the social provider. There are two ways to resolve the issue:";
     			t2 = space();
     			ol = element("ol");
     			li0 = element("li");
@@ -914,24 +972,27 @@ var app = (function () {
     			li1 = element("li");
     			a1 = element("a");
     			a1.textContent = "Use your own keys for the Social connection";
-    			add_location(p, file, 30, 0, 777);
+    			add_location(p, file, 37, 0, 1018);
     			attr_dev(a0, "href", "https://auth0.com/docs/universal-login/new");
-    			add_location(a0, file, 35, 6, 988);
-    			add_location(li0, file, 35, 2, 984);
+    			add_location(a0, file, 40, 6, 1227);
+    			add_location(li0, file, 40, 2, 1223);
     			attr_dev(a1, "href", "https://auth0.com/docs/connections/social/google");
-    			add_location(a1, file, 36, 6, 1104);
-    			add_location(li1, file, 36, 2, 1100);
-    			add_location(ol, file, 34, 0, 977);
+    			add_location(a1, file, 41, 6, 1343);
+    			add_location(li1, file, 41, 2, 1339);
+    			add_location(ol, file, 39, 0, 1216);
+    			attr_dev(div, "class", "container");
+    			add_location(div, file, 13, 0, 178);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			mount_component(auth0context, target, anchor);
-    			insert_dev(target, t0, anchor);
-    			insert_dev(target, p, anchor);
-    			insert_dev(target, t2, anchor);
-    			insert_dev(target, ol, anchor);
+    			insert_dev(target, div, anchor);
+    			mount_component(auth0context, div, null);
+    			append_dev(div, t0);
+    			append_dev(div, p);
+    			append_dev(div, t2);
+    			append_dev(div, ol);
     			append_dev(ol, li0);
     			append_dev(li0, a0);
     			append_dev(ol, t4);
@@ -958,11 +1019,8 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			destroy_component(auth0context, detaching);
-    			if (detaching) detach_dev(t0);
-    			if (detaching) detach_dev(p);
-    			if (detaching) detach_dev(t2);
-    			if (detaching) detach_dev(ol);
+    			if (detaching) detach_dev(div);
+    			destroy_component(auth0context);
     		}
     	};
 
