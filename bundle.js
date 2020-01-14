@@ -799,17 +799,17 @@ var app = (function () {
     			t16 = text("authError: ");
     			t17 = text(/*$authError*/ ctx[4]);
     			add_location(button0, file, 21, 2, 398);
-    			add_location(button1, file, 22, 2, 457);
-    			add_location(br, file, 22, 60, 515);
-    			add_location(pre0, file, 23, 2, 524);
-    			add_location(pre1, file, 24, 2, 561);
-    			add_location(pre2, file, 25, 2, 610);
-    			add_location(pre3, file, 26, 2, 647);
-    			add_location(pre4, file, 27, 2, 707);
+    			add_location(button1, file, 22, 2, 466);
+    			add_location(br, file, 22, 69, 533);
+    			add_location(pre0, file, 23, 2, 542);
+    			add_location(pre1, file, 24, 2, 579);
+    			add_location(pre2, file, 25, 2, 628);
+    			add_location(pre3, file, 26, 2, 665);
+    			add_location(pre4, file, 27, 2, 725);
 
     			dispose = [
-    				listen_dev(button0, "click", prevent_default(login), false, true, false),
-    				listen_dev(button1, "click", prevent_default(logout), false, true, false)
+    				listen_dev(button0, "click", prevent_default(/*click_handler*/ ctx[5]), false, true, false),
+    				listen_dev(button1, "click", prevent_default(/*click_handler_1*/ ctx[6]), false, true, false)
     			];
     		},
     		m: function mount(target, anchor) {
@@ -914,14 +914,14 @@ var app = (function () {
     			li1 = element("li");
     			a1 = element("a");
     			a1.textContent = "Use your own keys for the Social connection";
-    			add_location(p, file, 30, 0, 759);
+    			add_location(p, file, 30, 0, 777);
     			attr_dev(a0, "href", "https://auth0.com/docs/universal-login/new");
-    			add_location(a0, file, 35, 6, 970);
-    			add_location(li0, file, 35, 2, 966);
+    			add_location(a0, file, 35, 6, 988);
+    			add_location(li0, file, 35, 2, 984);
     			attr_dev(a1, "href", "https://auth0.com/docs/connections/social/google");
-    			add_location(a1, file, 36, 6, 1086);
-    			add_location(li1, file, 36, 2, 1082);
-    			add_location(ol, file, 34, 0, 959);
+    			add_location(a1, file, 36, 6, 1104);
+    			add_location(li1, file, 36, 2, 1100);
+    			add_location(ol, file, 34, 0, 977);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -942,7 +942,7 @@ var app = (function () {
     		p: function update(ctx, [dirty]) {
     			const auth0context_changes = {};
 
-    			if (dirty & /*$$scope, $authError, $userInfo, $authToken, $isAuthenticated, $isLoading*/ 63) {
+    			if (dirty & /*$$scope, $authError, $userInfo, $authToken, $isAuthenticated, $isLoading*/ 159) {
     				auth0context_changes.$$scope = { dirty, ctx };
     			}
 
@@ -993,6 +993,8 @@ var app = (function () {
     	component_subscribe($$self, userInfo, $$value => $$invalidate(3, $userInfo = $$value));
     	validate_store(authError, "authError");
     	component_subscribe($$self, authError, $$value => $$invalidate(4, $authError = $$value));
+    	const click_handler = () => login();
+    	const click_handler_1 = () => logout();
 
     	$$self.$capture_state = () => {
     		return {};
@@ -1006,7 +1008,15 @@ var app = (function () {
     		if ("$authError" in $$props) authError.set($authError = $$props.$authError);
     	};
 
-    	return [$isLoading, $isAuthenticated, $authToken, $userInfo, $authError];
+    	return [
+    		$isLoading,
+    		$isAuthenticated,
+    		$authToken,
+    		$userInfo,
+    		$authError,
+    		click_handler,
+    		click_handler_1
+    	];
     }
 
     class App extends SvelteComponentDev {
