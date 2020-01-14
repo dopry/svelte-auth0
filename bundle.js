@@ -967,7 +967,7 @@ var app = (function () {
     			ol = element("ol");
     			li0 = element("li");
     			a0 = element("a");
-    			a0.textContent = "Switch to the New Universal Login Experience]()";
+    			a0.textContent = "Switch to the New Universal Login Experience";
     			t4 = space();
     			li1 = element("li");
     			a1 = element("a");
@@ -977,8 +977,8 @@ var app = (function () {
     			add_location(a0, file, 40, 6, 1227);
     			add_location(li0, file, 40, 2, 1223);
     			attr_dev(a1, "href", "https://auth0.com/docs/connections/social/google");
-    			add_location(a1, file, 41, 6, 1343);
-    			add_location(li1, file, 41, 2, 1339);
+    			add_location(a1, file, 41, 6, 1340);
+    			add_location(li1, file, 41, 2, 1336);
     			add_location(ol, file, 39, 0, 1216);
     			attr_dev(div, "class", "container");
     			add_location(div, file, 13, 0, 178);
