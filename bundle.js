@@ -471,8 +471,9 @@ var app = (function () {
     async function logout() {
         // getContext(AUTH0_CONTEXT_CLIENT_PROMISE) returns a promise.
         const auth0 = await getContext(AUTH0_CONTEXT_CLIENT_PROMISE);
+        const returnTo = getContext(AUTH0_CONTEXT_REDIRECT_URI);
         authToken.set('');
-        auth0.logout({ returnTo: window.location.origin});
+        auth0.logout({ returnTo });
     }
 
     var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
