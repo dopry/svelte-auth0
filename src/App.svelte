@@ -13,9 +13,14 @@ import {
 
 <style></style>
 
-<Auth0Context domain="dev-hvw40i79.auth0.com" client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP">
-  <button on:click|preventDefault='{login}'>Login</button>
-  <button on:click|preventDefault='{logout}'>Logout</button><br />
+<Auth0Context
+  domain="dev-hvw40i79.auth0.com"
+  client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP"
+  callback_url="process.env.AUTH0_DEFAULT_CALLBACK_URL"
+  logout_url="process.env.AUTH0_DEFAULT_CALLBACK_URL"
+>
+  <button on:click|preventDefault='{() => login() }'>Login</button>
+  <button on:click|preventDefault='{() => logout() }'>Logout</button><br />
   <pre>isLoading: {$isLoading}</pre>
   <pre>isAuthenticated: {$isAuthenticated}</pre>
   <pre>authToken: {$authToken}</pre>

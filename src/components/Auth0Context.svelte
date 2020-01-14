@@ -2,7 +2,9 @@
     import createAuth0Client from '@auth0/auth0-spa-js';
     import { onMount, onDestroy, setContext, getContext } from 'svelte';
     import {
-        AUTH0_CONTEXT_KEY,
+        AUTH0_CONTEXT_CALLBACK_URL,
+        AUTH0_CONTEXT_CLIENT_PROMISE,
+        AUTH0_CONTEXT_LOGOUT_URL,
         refreshToken,
         isAuthenticated,
         isLoading,
@@ -14,6 +16,14 @@
     export let domain;
     export let client_id;
 
+    // defaults to a build time speco
+    export let callback_url;
+    export let logout_url;
+
+    setContext(AUTH0_CONTEXT_CALLBACK_URL, callback_url);
+    setContext(AUTH0_CONTEXT_LOGOUT_URL, logout_url);
+
+
     // constants
     // TODO: parse JWT token and get token's actual expiration time.
     const refreshRate = 10 * 60 * 60 * 1000;
@@ -23,7 +33,8 @@
 
     // getContext doesn't seem to return a value in OnMount, so we'll pass the auth0Promise around by reference.
     let auth0Promise = createAuth0Client({domain, client_id});
-    setContext(AUTH0_CONTEXT_KEY, auth0Promise);
+    setContext(AUTH0_CONTEXT_CLIENT_PROMISE, auth0Promise);
+
 
     async function handleOnMount() {
         // on run onMount after auth0

@@ -1,6 +1,6 @@
 {
 	"name": "@dopry/svelte-auth0",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"repository": "https://github.com/dopry/svelte-auth0",
 	"description": "Svelte Auth0 Component Library",
 	"keywords": [
@@ -13,16 +13,17 @@
 		"build": "rollup -c",
 		"cy:open": "cypress open",
 		"cy:run": "cypress run",
-		"dev": "rollup -c -w",
+		"showcase:publish": "gh-pages -d public",
+		"showcase:build": "rollup -c rollup.config.showcase.js",
+		"showcase:dev": "rollup -c rollup.config.showcase.js -w ",
 		"lint": "eslint --color --ignore-path .gitignore .",
 		"prepublishOnly": "npm run build",
 		"start": "sirv public",
-		"test": "start-server-and-test dev http://localhost:5000 cy:run"
+		"test": "start-server-and-test showcase:dev http://localhost:5000 cy:run"
 	},
 	"browserslist": [
 		"defaults"
 	],
-
 	"files": [
 		"src",
 		"dist"
@@ -42,13 +43,13 @@
 			"git add"
 		]
 	},
-
-
 	"svelte": "src/components/components.module.js",
 	"dependencies": {
 		"@auth0/auth0-spa-js": "1.6.2"
 	},
 	"devDependencies": {
+		"@rollup/plugin-node-resolve": "7.0.0",
+		"@rollup/plugin-replace": "2.3.0",
 		"@testing-library/cypress": "5.0.2",
 		"autoprefixer": "9.7.3",
 		"cypress": "3.8.2",
@@ -56,6 +57,7 @@
 		"eslint-config-prettier": "6.9.0",
 		"eslint-plugin-cypress": "2.8.1",
 		"eslint-plugin-svelte3": "2.7.3",
+		"gh-pages": "2.2.0",
 		"lint-staged": "9.5.0",
 		"postcss": "7.0.26",
 		"postcss-load-config": "2.1.0",
