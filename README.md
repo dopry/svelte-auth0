@@ -2,6 +2,8 @@
 
 An Auth0 Component for Svelte.
 
+[Try out the demo](https://darrelopry.com/svelte-auth0/)
+
 ## Getting Started
 
 Setup an [Auth0](http://auth0.com) Account. Get the domain client_id  from the Default App.
@@ -20,12 +22,12 @@ import {
   login,
   logout,
   userInfo,
-} from './components/components.module.js';
+} from '@dopry/svelte-auth0';
 </script>
 
 <Auth0Context domain="dev-hvw40i79.auth0.com" client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP">
-  <button on:click|preventDefault='{login}'>Login</button>
-  <button on:click|preventDefault='{logout}'>Logout</button><br />
+  <button on:click|preventDefault='{() => login() }'>Login</button>
+  <button on:click|preventDefault='{() => logout() }'>Logout</button><br />
   <pre>isLoading: {$isLoading}</pre>
   <pre>isAuthenticated: {$isAuthenticated}</pre>
   <pre>authToken: {$authToken}</pre>
