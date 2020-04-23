@@ -15,6 +15,7 @@ import {
 <Auth0Context
   domain="dev-hvw40i79.auth0.com"
   client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP"
+  audience="http://localhost/"
   callback_url="process.env.AUTH0_DEFAULT_CALLBACK_URL"
   logout_url="process.env.AUTH0_DEFAULT_CALLBACK_URL"
 >

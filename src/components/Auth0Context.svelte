@@ -15,6 +15,7 @@
     // props.
     export let domain;
     export let client_id;
+    export let audience;
 
     // defaults to a build time speco
     export let callback_url;
@@ -32,7 +33,7 @@
     let tokenRefreshIntervalId;
 
     // getContext doesn't seem to return a value in OnMount, so we'll pass the auth0Promise around by reference.
-    let auth0Promise = createAuth0Client({domain, client_id});
+    let auth0Promise = createAuth0Client({domain, client_id, audience});
     setContext(AUTH0_CONTEXT_CLIENT_PROMISE, auth0Promise);
 
 
