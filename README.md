@@ -44,6 +44,7 @@ import {
   Attributes:
   * domain - Auth0 domain
   * client_id - Auth0 ClientId
+  * audience - The default audience to be used for requesting API access
   * callback_url - override the default url that Auth0 will redirect to after login. default: window.location.href
   * logout_url - override the default url that Auth0 will redirect to after logout. default: window.location.href
 
