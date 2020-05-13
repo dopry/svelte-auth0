@@ -10,9 +10,9 @@ Setup an [Auth0](http://auth0.com) Account. Get the domain client_id  from the D
 
 `npm install @dopry/svelte-auth0`
 
-App.svelte
+### App.svelte
 ```
-# App.svelte
+<script>
 import {
   Auth0Context,
   authError,
