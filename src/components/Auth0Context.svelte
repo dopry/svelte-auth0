@@ -72,7 +72,7 @@
             const user = await auth0.getUser();
             userInfo.set(user);
             // fetch the token claims
-            const idTokenClaims = await auth0FromHook.getIdTokenClaims();
+            const idTokenClaims = await auth0.getIdTokenClaims();
             idToken.set(idTokenClaims.__raw);
             // automatically keep a curent token.
             refreshToken();
