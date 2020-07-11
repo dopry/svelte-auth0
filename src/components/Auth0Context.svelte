@@ -9,7 +9,8 @@
         isAuthenticated,
         isLoading,
         authError,
-        userInfo
+        userInfo,
+        idToken
     } from './auth0';
 
     // props.
@@ -70,6 +71,9 @@
             // fetch the user info
             const user = await auth0.getUser();
             userInfo.set(user);
+            // fetch the token claims
+            const idTokenClaims = await auth0FromHook.getIdTokenClaims();
+            idToken.set(idTokenClaims.__raw);
             // automatically keep a curent token.
             refreshToken();
             tokenRefreshIntervalId = setInterval(refreshToken, refreshRate);
