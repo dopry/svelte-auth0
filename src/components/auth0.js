@@ -7,6 +7,7 @@ import { getContext } from 'svelte';
 export const isLoading = writable(true);
 export const isAuthenticated = writable(false);
 export const authToken = writable('');
+export const idToken = writable('');
 export const userInfo = writable({});
 export const authError = writable(null);
 
