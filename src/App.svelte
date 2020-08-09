@@ -30,7 +30,7 @@ import {
       <tr><td>isLoading</td><td>{$isLoading}</td></tr>
       <tr><td>isAuthenticated</td><td>{$isAuthenticated}</td></tr>
       <tr><td>authToken</td><td>{$authToken}</td></tr>
-      <tr><td>userInfo</td><td><pre>{JSON.stringify($userInfo, null, 2)}<pre></td></tr>
+      <tr><td>userInfo</td><td><pre>{JSON.stringify($userInfo, null, 2)}</pre></td></tr>
       <tr><td>authError</td><td>{$authError}</td></tr>
     </tbody>
   </table>
