@@ -17,6 +17,7 @@ import {
   Auth0Context,
   authError,
   authToken,
+  idToken,
   isAuthenticated,
   isLoading,
   login,
@@ -31,6 +32,7 @@ import {
   <pre>isLoading: {$isLoading}</pre>
   <pre>isAuthenticated: {$isAuthenticated}</pre>
   <pre>authToken: {$authToken}</pre>
+  <pre>idToken: {$idToken}</pre>
   <pre>userInfo: {JSON.stringify($userInfo, null, 2)}</pre>
   <pre>authError: {$authError}</pre>
 </Auth0Context>

@@ -3,6 +3,7 @@ import {
   Auth0Context,
   authError,
   authToken,
+  idToken,
   isAuthenticated,
   isLoading,
   login,
@@ -15,7 +16,7 @@ import {
 <Auth0Context
   domain="dev-hvw40i79.auth0.com"
   client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP"
-  audience="http://localhost/"
+  audience="process.env.AUTH0_AUDIENCE"
   callback_url="process.env.AUTH0_DEFAULT_CALLBACK_URL"
   logout_url="process.env.AUTH0_DEFAULT_CALLBACK_URL"
 >
@@ -30,6 +31,7 @@ import {
       <tr><td>isLoading</td><td>{$isLoading}</td></tr>
       <tr><td>isAuthenticated</td><td>{$isAuthenticated}</td></tr>
       <tr><td>authToken</td><td>{$authToken}</td></tr>
+      <tr><td>idToken</td><td>{$idToken}</td></tr>
       <tr><td>userInfo</td><td><pre>{JSON.stringify($userInfo, null, 2)}</pre></td></tr>
       <tr><td>authError</td><td>{$authError}</td></tr>
     </tbody>

@@ -14,7 +14,8 @@ export default {
 		replace({
 			'process.env.AUTH0_DEFAULT_DOMAIN': 'dev-hvw40i79.auth0.com',
 			'process.env.AUTH0_DEFAULT_CLIENT_ID': 'aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP',
-			'process.env.AUTH0_DEFAULT_CALLBACK_URL': production ? 'https://darrelopry.com/svelte-auth0' : '',
+			'process.env.AUTH0_DEFAULT_CALLBACK_URL': production ? 'https://darrelopry.com/svelte-auth0' : 'http://localhost:5000',
+			'process.env.AUTH0_AUDIENCE': production ? 'https://darrelopry.com/svelte-auth0' : 'http://localhost:5000',
 			'pkg.version': pkg.version
 		}),
 		svelte({ dev: true }),
