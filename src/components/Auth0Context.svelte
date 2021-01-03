@@ -1,6 +1,6 @@
 <script>
     import createAuth0Client from '@auth0/auth0-spa-js';
-    import { onMount, onDestroy, setContext, getContext } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import {
         AUTH0_CONTEXT_CALLBACK_URL,
         AUTH0_CONTEXT_CLIENT_PROMISE,
@@ -22,8 +22,8 @@
     export let callback_url;
     export let logout_url;
 
-    setContext(AUTH0_CONTEXT_CALLBACK_URL, callback_url);
-    setContext(AUTH0_CONTEXT_LOGOUT_URL, logout_url);
+    AUTH0_CONTEXT_CALLBACK_URL.value = callback_url;
+    AUTH0_CONTEXT_LOGOUT_URL.value = logout_url;
 
 
     // constants
@@ -35,7 +35,7 @@
 
     // getContext doesn't seem to return a value in OnMount, so we'll pass the auth0Promise around by reference.
     let auth0Promise = createAuth0Client({domain, client_id, audience});
-    setContext(AUTH0_CONTEXT_CLIENT_PROMISE, auth0Promise);
+    AUTH0_CONTEXT_CLIENT_PROMISE.value = auth0Promise;
 
 
     async function handleOnMount() {
