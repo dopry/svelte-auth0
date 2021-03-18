@@ -89,5 +89,5 @@ import {
 
 **use semver**
 npm publish
-npm showcase:build
-npm showcase:publish
+npm run showcase:build
+npm run showcase:publish
