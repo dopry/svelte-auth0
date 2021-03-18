@@ -11,7 +11,8 @@ Setup an [Auth0](http://auth0.com) Account. Get the domain client_id  from the D
 `npm install @dopry/svelte-auth0`
 
 ### App.svelte
-```
+
+```svelte
 <script>
 import {
   Auth0Context,
@@ -41,7 +42,8 @@ import {
 ## Docs
 
 ### Components
-* Auth0Context - component to initiate the Auth0 client. You only need one instance in your DOM tree at the root.
+
+* Auth0Context - component to initiate the Auth0 client. You only need one instance in your DOM tree at the root
 
   Attributes:
   * domain - Auth0 domain
@@ -51,11 +53,13 @@ import {
   * logout_url - override the default url that Auth0 will redirect to after logout. default: window.location.href
 
 ### Functions
+
 * login(preseveRoute = true, callback_url = null) - begin a user login.
 * logout(logout_url = null) - logout a user.
 * refreshToken - function to refresh a token.
 
 ### Stores
+
 * isLoading - if true auth0 is still loading.
 * isAuthenticated - true if user is currently authenticated
 * authToken - api token
@@ -63,11 +67,13 @@ import {
 * authError - the last authentication error.
 
 ### Constants
+
 * AUTH0_CONTEXT_CALLBACK_URL,
 * AUTH0_CONTEXT_CLIENT_PROMISE - key for the Auth0 client in setContext/getContext.
 * AUTH0_CONTEXT_LOGOUT_URL,
 
 ## Release
+
 **use semver**
 npm publish
 npm showcase:build
