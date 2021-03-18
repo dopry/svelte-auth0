@@ -75,7 +75,7 @@
             const idTokenClaims = await auth0.getIdTokenClaims();
             idToken.set(idTokenClaims.__raw);
             // automatically keep a curent token.
-            refreshToken();
+            refreshToken(auth0Promise);
             tokenRefreshIntervalId = setInterval(refreshToken, refreshRate);
         }
         isLoading.set(false);

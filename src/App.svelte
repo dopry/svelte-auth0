@@ -1,13 +1,13 @@
 <script>
 import {
   Auth0Context,
+  Auth0LoginButton,
+  Auth0LogoutButton,
   authError,
   authToken,
   idToken,
   isAuthenticated,
   isLoading,
-  login,
-  logout,
   userInfo,
 } from './components/components.module.js';
 </script>
@@ -21,8 +21,9 @@ import {
   logout_url="process.env.AUTH0_DEFAULT_CALLBACK_URL"
 >
 
-  <button class="btn" on:click|preventDefault='{() => login() }'>Login</button>
-  <button class="btn" on:click|preventDefault='{() => logout() }'>Logout</button>
+  <Auth0LoginButton>Login</Auth0LoginButton>
+  <Auth0LogoutButton>Logout</Auth0LogoutButton>
+
   <table>
     <thead>
       <tr><th>store</th><th>value</th></tr>
