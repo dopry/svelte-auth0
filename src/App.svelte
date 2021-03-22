@@ -21,8 +21,8 @@ import {
   logout_url="process.env.AUTH0_DEFAULT_CALLBACK_URL"
 >
 
-  <Auth0LoginButton>Login</Auth0LoginButton>
-  <Auth0LogoutButton>Logout</Auth0LogoutButton>
+  <Auth0LoginButton class="btn">Login</Auth0LoginButton>
+  <Auth0LogoutButton class="btn">Logout</Auth0LogoutButton>
 
   <table>
     <thead>
