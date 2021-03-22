@@ -9,6 +9,9 @@
     const auth0Promise = getContext(AUTH0_CONTEXT_CLIENT_PROMISE)
     export let callback_url = getContext(AUTH0_CONTEXT_CALLBACK_URL)
     export let preserveRoute
+
+	let clazz;
+	export { clazz as class };
 </script>
 
-<button class="btn" on:click|preventDefault='{() => login(auth0Promise,preserveRoute, callback_url) }'><slot></slot></button>
+<button class="{clazz}" on:click|preventDefault='{() => login(auth0Promise,preserveRoute, callback_url) }'><slot></slot></button>
