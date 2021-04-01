@@ -30,8 +30,8 @@ import {
 </script>
 
 <Auth0Context domain="dev-hvw40i79.auth0.com" client_id="aOijZt2ug6Ovgzp0HXdF23B6zxwA6PaP">
-  <Auth0LoginButton>Login</Auth0LoginButton>
-  <Auth0LogoutButton>Logout</Auth0LogoutButton>
+  <Auth0LoginButton class="btn">Login</Auth0LoginButton>
+  <Auth0LogoutButton class="btn">Logout</Auth0LogoutButton>
   <pre>isLoading: {$isLoading}</pre>
   <pre>isAuthenticated: {$isAuthenticated}</pre>
   <pre>authToken: {$authToken}</pre>

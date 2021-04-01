@@ -8,6 +8,9 @@
 
     const auth0Promise = getContext(AUTH0_CONTEXT_CLIENT_PROMISE)
     export let logout_url = getContext(AUTH0_CONTEXT_LOGOUT_URL)
+
+    let clazz;
+	export { clazz as class };
 </script>
 
-<button class="btn" on:click|preventDefault='{() => logout(auth0Promise, logout_url) }'><slot></slot></button>
+<button class="{clazz}" on:click|preventDefault='{() => logout(auth0Promise, logout_url) }'><slot></slot></button>
