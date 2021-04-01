@@ -643,14 +643,14 @@ var app = (function () {
     	let current;
     	let mounted;
     	let dispose;
-    	const default_slot_template = /*#slots*/ ctx[4].default;
-    	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[3], null);
+    	const default_slot_template = /*#slots*/ ctx[5].default;
+    	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[4], null);
 
     	return {
     		c() {
     			button = element("button");
     			if (default_slot) default_slot.c();
-    			attr(button, "class", "btn");
+    			attr(button, "class", /*clazz*/ ctx[2]);
     		},
     		m(target, anchor) {
     			insert(target, button, anchor);
@@ -662,15 +662,19 @@ var app = (function () {
     			current = true;
 
     			if (!mounted) {
-    				dispose = listen(button, "click", prevent_default(/*click_handler*/ ctx[5]));
+    				dispose = listen(button, "click", prevent_default(/*click_handler*/ ctx[6]));
     				mounted = true;
     			}
     		},
     		p(ctx, [dirty]) {
     			if (default_slot) {
-    				if (default_slot.p && dirty & /*$$scope*/ 8) {
-    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[3], dirty, null, null);
+    				if (default_slot.p && dirty & /*$$scope*/ 16) {
+    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[4], dirty, null, null);
     				}
+    			}
+
+    			if (!current || dirty & /*clazz*/ 4) {
+    				attr(button, "class", /*clazz*/ ctx[2]);
     			}
     		},
     		i(local) {
@@ -696,21 +700,36 @@ var app = (function () {
     	const auth0Promise = getContext(AUTH0_CONTEXT_CLIENT_PROMISE);
     	let { callback_url = getContext(AUTH0_CONTEXT_CALLBACK_URL) } = $$props;
     	let { preserveRoute } = $$props;
+    	let { class: clazz } = $$props;
     	const click_handler = () => login(auth0Promise, preserveRoute, callback_url);
 
     	$$self.$$set = $$props => {
     		if ("callback_url" in $$props) $$invalidate(0, callback_url = $$props.callback_url);
     		if ("preserveRoute" in $$props) $$invalidate(1, preserveRoute = $$props.preserveRoute);
-    		if ("$$scope" in $$props) $$invalidate(3, $$scope = $$props.$$scope);
+    		if ("class" in $$props) $$invalidate(2, clazz = $$props.class);
+    		if ("$$scope" in $$props) $$invalidate(4, $$scope = $$props.$$scope);
     	};
 
-    	return [callback_url, preserveRoute, auth0Promise, $$scope, slots, click_handler];
+    	return [
+    		callback_url,
+    		preserveRoute,
+    		clazz,
+    		auth0Promise,
+    		$$scope,
+    		slots,
+    		click_handler
+    	];
     }
 
     class Auth0LoginButton extends SvelteComponent {
     	constructor(options) {
     		super();
-    		init(this, options, instance$2, create_fragment$2, safe_not_equal, { callback_url: 0, preserveRoute: 1 });
+
+    		init(this, options, instance$2, create_fragment$2, safe_not_equal, {
+    			callback_url: 0,
+    			preserveRoute: 1,
+    			class: 2
+    		});
     	}
     }
 
@@ -721,14 +740,14 @@ var app = (function () {
     	let current;
     	let mounted;
     	let dispose;
-    	const default_slot_template = /*#slots*/ ctx[3].default;
-    	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[2], null);
+    	const default_slot_template = /*#slots*/ ctx[4].default;
+    	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[3], null);
 
     	return {
     		c() {
     			button = element("button");
     			if (default_slot) default_slot.c();
-    			attr(button, "class", "btn");
+    			attr(button, "class", /*clazz*/ ctx[1]);
     		},
     		m(target, anchor) {
     			insert(target, button, anchor);
@@ -740,15 +759,19 @@ var app = (function () {
     			current = true;
 
     			if (!mounted) {
-    				dispose = listen(button, "click", prevent_default(/*click_handler*/ ctx[4]));
+    				dispose = listen(button, "click", prevent_default(/*click_handler*/ ctx[5]));
     				mounted = true;
     			}
     		},
     		p(ctx, [dirty]) {
     			if (default_slot) {
-    				if (default_slot.p && dirty & /*$$scope*/ 4) {
-    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[2], dirty, null, null);
+    				if (default_slot.p && dirty & /*$$scope*/ 8) {
+    					update_slot(default_slot, default_slot_template, ctx, /*$$scope*/ ctx[3], dirty, null, null);
     				}
+    			}
+
+    			if (!current || dirty & /*clazz*/ 2) {
+    				attr(button, "class", /*clazz*/ ctx[1]);
     			}
     		},
     		i(local) {
@@ -773,20 +796,22 @@ var app = (function () {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	const auth0Promise = getContext(AUTH0_CONTEXT_CLIENT_PROMISE);
     	let { logout_url = getContext(AUTH0_CONTEXT_LOGOUT_URL) } = $$props;
+    	let { class: clazz } = $$props;
     	const click_handler = () => logout(auth0Promise, logout_url);
 
     	$$self.$$set = $$props => {
     		if ("logout_url" in $$props) $$invalidate(0, logout_url = $$props.logout_url);
-    		if ("$$scope" in $$props) $$invalidate(2, $$scope = $$props.$$scope);
+    		if ("class" in $$props) $$invalidate(1, clazz = $$props.class);
+    		if ("$$scope" in $$props) $$invalidate(3, $$scope = $$props.$$scope);
     	};
 
-    	return [logout_url, auth0Promise, $$scope, slots, click_handler];
+    	return [logout_url, clazz, auth0Promise, $$scope, slots, click_handler];
     }
 
     class Auth0LogoutButton extends SvelteComponent {
     	constructor(options) {
     		super();
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { logout_url: 0 });
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { logout_url: 0, class: 1 });
     	}
     }
 
@@ -808,7 +833,7 @@ var app = (function () {
     	};
     }
 
-    // (25:2) <Auth0LogoutButton>
+    // (25:2) <Auth0LogoutButton class="btn">
     function create_default_slot_1(ctx) {
     	let t;
 
@@ -870,6 +895,7 @@ var app = (function () {
 
     	auth0loginbutton = new Auth0LoginButton({
     			props: {
+    				class: "btn",
     				$$slots: { default: [create_default_slot_2] },
     				$$scope: { ctx }
     			}
@@ -877,6 +903,7 @@ var app = (function () {
 
     	auth0logoutbutton = new Auth0LogoutButton({
     			props: {
+    				class: "btn",
     				$$slots: { default: [create_default_slot_1] },
     				$$scope: { ctx }
     			}
