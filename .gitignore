@@ -5,3 +5,5 @@
 cypress/videos
 cypress/screenshots
 /public/bundle.*
+
+pnpm-lock.yaml
