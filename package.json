@@ -9,6 +9,7 @@
 	"license": "MIT",
 	"main": "dist/index.min.js",
 	"module": "dist/index.min.mjs",
+	"types": "src/components/main.d.ts",
 	"scripts": {
 		"build": "rollup -c",
 		"cy:open": "cypress open",
