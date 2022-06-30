@@ -34,7 +34,11 @@
     let tokenRefreshIntervalId;
 
     // getContext doesn't seem to return a value in OnMount, so we'll pass the auth0Promise around by reference.
-    let auth0Promise = createAuth0Client({domain, client_id, audience});
+    let auth0Promise = createAuth0Client({domain, client_id, audience}).catch(e=>{
+        // Handle promise rejections
+        isLoading.set(false);
+        authError.set(e);
+    });
     setContext(AUTH0_CONTEXT_CLIENT_PROMISE, auth0Promise);
 
 
