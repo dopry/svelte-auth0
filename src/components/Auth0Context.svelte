@@ -56,7 +56,7 @@
         }
 
         // if code then login success
-        if (params.has('code')) {
+        if (params.has('code') && params.has('state')) {
             // Let the Auth0 SDK do it's stuff - save some state, etc.
             const { appState } = await auth0.handleRedirectCallback();
             // Can be smart here and redirect to original path instead of root
